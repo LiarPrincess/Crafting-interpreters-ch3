@@ -3,11 +3,18 @@
 
 #include "common.h"
 
+// Single remembered constant value.
 typedef double Value;
 
 typedef struct {
+
+  // Number of currently held elements.
   int count;
+
+  // Number of elements that can hold without resizing.
   int capacity;
+
+  // Data.
   Value* values;
 } ValueArray;
 

@@ -7,15 +7,58 @@
 	// Placeholders with the same ids are connected.
 
 	"Include guard": {
-		"prefix": "hguard",
+		"prefix": "guard",
 		"body": [
-			"#ifndef $1_h ",
-			"#define $1_h ",
+			"#ifndef $1_h",
+			"#define $1_h",
 			"",
 			"$0",
 			"",
-			"#endif /* $1_h */",
-		],
-		"description": "Include guard"
+			"#endif /* $1_h */"
+		]
+	},
+	"Include": {
+		"prefix": "inc",
+		"body": [
+			"#include \"$1\""
+		]
+	},
+	"Define": {
+		"prefix": "def",
+		"body": [
+			"#define $1 $2"
+		]
+	},
+	"Undefine": {
+		"prefix": "undef",
+		"body": [
+			"#undef $1"
+		]
+	},
+	"Chunk ptr": {
+		"prefix": "ch",
+		"body": [
+			"Chunk* chunk"
+		]
+	},
+	"Clang disable": {
+		"prefix": "clang-disable",
+		"body": [
+			"#pragma clang diagnostic push",
+			"#pragma clang diagnostic ignored \"-Wunused-function\"",
+			"",
+			"#include <stdio.h>",
+			"static void printAla() {",
+			"  printf(\"Ala\\n\");",
+			"}",
+			"",
+			"#pragma clang diagnostic pop"
+		]
+	},
+	"LLDB exec": {
+		"prefix": "e",
+		"body": [
+			"-exec $0"
+		]
 	}
 }

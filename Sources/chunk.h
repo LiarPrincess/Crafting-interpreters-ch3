@@ -10,10 +10,20 @@ typedef enum {
 } OpCode;
 
 typedef struct {
+
+  // Number of currently held elements.
   int count;
+
+  // Number of elements that can hold without resizing.
   int capacity;
+
+  // Bytecode (or operand stored as index insice this->constants).
   uint8_t* code;
+
+  // Line in the original source code.
   int* lines;
+
+  // Array of remebered constant values.
   ValueArray constants;
 } Chunk;
 

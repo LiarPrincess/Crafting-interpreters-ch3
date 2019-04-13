@@ -1,0 +1,9 @@
+{
+  "cSpell.diagnosticLevel": "Information",
+  "files.associations": {
+    "Fastfile": "ruby",
+    "common.h": "c",
+    "value.h": "c",
+    "debug.h": "c"
+  },
+}
