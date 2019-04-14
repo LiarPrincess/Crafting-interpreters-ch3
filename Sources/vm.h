@@ -3,6 +3,9 @@
 
 #include "common.h"
 #include "chunk.h"
+#include "value.h"
+
+#define MAX_STACK 256
 
 typedef struct {
 
@@ -11,6 +14,9 @@ typedef struct {
 
   // Instruction pointer.
   uint8_t* ip;
+
+  Value stack[MAX_STACK];
+  Value* stackTop;
 } VM;
 
 typedef enum {
@@ -23,5 +29,7 @@ void initVM();
 void freeVM();
 
 InterpretResult interpret(Chunk* chunk);
+void push(Value value);
+Value pop();
 
 #endif /* vm_h */

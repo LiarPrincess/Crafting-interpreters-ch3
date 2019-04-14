@@ -3,6 +3,9 @@
 #include "debug.h"
 #include "value.h"
 
+static int constantInstruction(const char* name, Chunk* chunk, int offset);
+static int simpleInstruction(const char* name, int offset);
+
 void disassembleChunk(Chunk* chunk, const char* name) {
   printf("== %s ==\n", name);
 
@@ -10,9 +13,6 @@ void disassembleChunk(Chunk* chunk, const char* name) {
     offset = disassembleInstruction(chunk, offset);
   }
 }
-
-static int constantInstruction(const char* name, Chunk* chunk, int offset);
-static int simpleInstruction(const char* name, int offset);
 
 int disassembleInstruction(Chunk* chunk, int offset) {
   printf("%04d ", offset);
@@ -27,6 +27,16 @@ int disassembleInstruction(Chunk* chunk, int offset) {
   switch (instruction) {
     case OP_CONSTANT:
       return constantInstruction("OP_CONSTANT", chunk, offset);
+    case OP_NEGATE:
+      return simpleInstruction("OP_NEGATE", offset);
+    case OP_ADD:
+      return simpleInstruction("OP_ADD", offset);
+    case OP_SUBTRACT:
+      return simpleInstruction("OP_SUBTRACT", offset);
+    case OP_MULTIPLY:
+      return simpleInstruction("OP_MULTIPLY", offset);
+    case OP_DIVIDE:
+      return simpleInstruction("OP_DIVIDE", offset);
     case OP_RETURN:
       return simpleInstruction("OP_RETURN", offset);
     default:
@@ -38,10 +48,10 @@ int disassembleInstruction(Chunk* chunk, int offset) {
 }
 
 static int constantInstruction(const char* name, Chunk* chunk, int offset) {
-  uint8_t valueIndex = chunk->code[offset];
-  printf("%s %d (value: ", name, valueIndex);
+  uint8_t valueIndex = chunk->code[offset + 1];
+  printf("%s %d [", name, valueIndex);
   printValue(chunk->constants.values[valueIndex]);
-  printf(")\n");
+  printf("]\n");
   return offset + 2;
 }
 

@@ -6,4 +6,5 @@
     "value.h": "c",
     "debug.h": "c"
   },
+  "debug.openDebug": "neverOpen",
 }

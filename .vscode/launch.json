@@ -14,12 +14,7 @@
       "environment": [],
       "MIMode": "lldb",
       "preLaunchTask": "Build",
-      "externalConsole": false,
-      "internalConsoleOptions": "openOnSessionStart",
-      "logging": {
-        "programOutput": true,
-        "moduleLoad": false
-      }
+      "externalConsole": true
     }
   ]
 }

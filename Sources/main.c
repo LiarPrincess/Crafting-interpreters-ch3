@@ -16,12 +16,34 @@ int main(int argc, const char * argv[]) {
   writeChunk(&chunk, OP_CONSTANT, 123);
   writeChunk(&chunk, constant, 123);
 
+  constant = addConstant(&chunk, 3.4);
+  writeChunk(&chunk, OP_CONSTANT, 123);
+  writeChunk(&chunk, constant, 123);
+
+  writeChunk(&chunk, OP_ADD, 123);
+
+  constant = addConstant(&chunk, 5.6);
+  writeChunk(&chunk, OP_CONSTANT, 123);
+  writeChunk(&chunk, constant, 123);
+
+  writeChunk(&chunk, OP_DIVIDE, 123);
+  writeChunk(&chunk, OP_NEGATE, 123);
+
   writeChunk(&chunk, OP_RETURN, 123);
-  // disassembleChunk(&chunk, "test chunk");
+
+  printf("=== Disassembling ===\n");
+  disassembleChunk(&chunk, "test chunk");
+  printf("\n");
+
+  printf("=== Interpreting ===\n");
   interpret(&chunk);
+  printf("\n");
 
   freeVM();
   freeChunk(&chunk);
 
+  char in[100];
+  printf("Press ENTER to exit...");
+  fgets(in, 100, stdin);
   return 0;
 }
