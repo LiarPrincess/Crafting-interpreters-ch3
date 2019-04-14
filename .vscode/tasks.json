@@ -12,16 +12,8 @@
           "isDefault": true
         },
       "problemMatcher": {
-        "owner": "c",
-        "fileLocation": "absolute",
-        "pattern": {
-            "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-            "file": 1,
-            "line": 2,
-            "column": 3,
-            "severity": 4,
-            "message": 5
-        }
+        "base": "$gcc",
+        "fileLocation": "absolute"
       },
       "presentation": {
         "echo": false,
@@ -35,12 +27,7 @@
     {
       "label": "cmake",
       "type": "shell",
-      "command": "cwd && cd ./Build && cmake ..",
-      // "args": [
-      //   "-G",
-      //   "Unix Makefiles",
-      //   "-DCMAKE_BUILD_TYPE=Debug",
-      // ],
+      "command": "cwd && cd ./Build && cmake .. -G Unix Makefiles -DCMAKE_BUILD_TYPE=Debug",
       "problemMatcher": {
         "owner": "cmake",
         "pattern": { "regexp": "" }

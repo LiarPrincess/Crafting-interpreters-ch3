@@ -4,7 +4,20 @@
     "Fastfile": "ruby",
     "common.h": "c",
     "value.h": "c",
-    "debug.h": "c"
+    "debug.h": "c",
+    "string.h": "c",
+    "stdlib.h": "c",
+    "stdio.h": "c",
+    "cdefs.h": "c",
+    "sysexits.h": "c",
+    "compiler.h": "c"
   },
   "debug.openDebug": "neverOpen",
+  "cSpell.words": [
+    "intelli",
+    "msvc",
+    "nostdinc",
+    "sense",
+    "workspace's"
+  ],
 }
