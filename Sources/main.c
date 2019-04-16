@@ -3,8 +3,8 @@
 #include <string.h>
 
 #include "common.h"
-#include "vm.h"
 #include "chunk.h"
+#include "vm.h"
 #include "debug.h"
 
 static void repl();
@@ -90,35 +90,3 @@ static void waitForInput() {
   printf("Press ENTER to exit...");
   fgets(line, 1024, stdin);
 }
-
-// Chunk chunk;
-// initChunk(&chunk);
-
-// int constant = addConstant(&chunk, 1.2);
-// writeChunk(&chunk, OP_CONSTANT, 123);
-// writeChunk(&chunk, constant, 123);
-
-// constant = addConstant(&chunk, 3.4);
-// writeChunk(&chunk, OP_CONSTANT, 123);
-// writeChunk(&chunk, constant, 123);
-
-// writeChunk(&chunk, OP_ADD, 123);
-
-// constant = addConstant(&chunk, 5.6);
-// writeChunk(&chunk, OP_CONSTANT, 123);
-// writeChunk(&chunk, constant, 123);
-
-// writeChunk(&chunk, OP_DIVIDE, 123);
-// writeChunk(&chunk, OP_NEGATE, 123);
-
-// writeChunk(&chunk, OP_RETURN, 123);
-
-// printf("=== Disassembling ===\n");
-// disassembleChunk(&chunk, "test chunk");
-// printf("\n");
-
-// printf("=== Interpreting ===\n");
-// interpret(&chunk);
-// printf("\n");
-
-// freeChunk(&chunk);
