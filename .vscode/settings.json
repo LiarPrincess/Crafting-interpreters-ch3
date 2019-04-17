@@ -10,7 +10,8 @@
     "stdio.h": "c",
     "cdefs.h": "c",
     "sysexits.h": "c",
-    "compiler.h": "c"
+    "compiler.h": "c",
+    "cstdarg": "c"
   },
   "debug.openDebug": "neverOpen",
   "cSpell.words": [
