@@ -44,6 +44,12 @@ static void repl() {
       break;
     }
 
+
+    if (strcmp(line, "exit\n") == 0) {
+      printf("Exiting...\n");
+      return;
+    }
+
     interpret(line);
   }
 }

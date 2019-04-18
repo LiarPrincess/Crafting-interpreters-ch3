@@ -14,10 +14,15 @@
                     sizeof(type) * (oldCount), \
                     sizeof(type) * (count))
 
+#define FREE(type, pointer) \
+    reallocate(pointer, sizeof(type), 0)
 
 #define FREE_ARRAY(type, pointer, oldCount) \
   reallocate(pointer, sizeof(type) * (oldCount), 0)
 
 void* reallocate(void* previous, size_t oldSize, size_t newSize);
+
+// Free all of the nodes in vm.objects
+void freeObjects();
 
 #endif /* memory_h */

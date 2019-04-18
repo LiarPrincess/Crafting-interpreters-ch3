@@ -22,10 +22,11 @@ static InterpretResult run();
 
 void initVM() {
   resetStack();
+  vm.objects = NULL;
 }
 
 void freeVM() {
-
+  freeObjects();
 }
 
 // stack

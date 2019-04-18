@@ -11,7 +11,9 @@
     "cdefs.h": "c",
     "sysexits.h": "c",
     "compiler.h": "c",
-    "cstdarg": "c"
+    "cstdarg": "c",
+    "object.h": "c",
+    "vm.h": "c"
   },
   "debug.openDebug": "neverOpen",
   "cSpell.words": [
