@@ -19,6 +19,7 @@
     "msvc",
     "nostdinc",
     "sense",
+    "truthy",
     "workspace's"
   ],
 }

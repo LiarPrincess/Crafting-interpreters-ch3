@@ -27,10 +27,18 @@
     {
       "label": "cmake",
       "type": "shell",
-      "command": "cwd && cd ./Build && cmake .. -G Unix Makefiles -DCMAKE_BUILD_TYPE=Debug",
+      "command": "cd ./Build && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug",
       "problemMatcher": {
         "owner": "cmake",
         "pattern": { "regexp": "" }
+      },
+      "presentation": {
+        "echo": false,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
       },
     }
   ]
