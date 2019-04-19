@@ -13,7 +13,8 @@
     "compiler.h": "c",
     "cstdarg": "c",
     "object.h": "c",
-    "vm.h": "c"
+    "vm.h": "c",
+    "table.h": "c"
   },
   "debug.openDebug": "neverOpen",
   "cSpell.words": [
