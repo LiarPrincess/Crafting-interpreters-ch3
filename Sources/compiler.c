@@ -250,7 +250,9 @@ static void printStatement() {
 }
 
 static void expressionStatement() {
-
+  expression();
+  emitByte(OP_POP);
+  consume(TOKEN_SEMICOLON, "Expected ';' after value.");
 }
 
 static void statement() {
