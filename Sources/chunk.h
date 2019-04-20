@@ -12,6 +12,7 @@ typedef enum {
   OP_POP, // vm
   OP_DEFINE_GLOBAL,
   OP_GET_GLOBAL,
+  OP_SET_GLOBAL,
   OP_NOT, // unary
   OP_NEGATE,
   OP_PRINT,
