@@ -17,6 +17,8 @@ typedef struct {
   Value stack[MAX_STACK];
   // Last entry on stack
   Value* stackTop;
+  // Global variables
+  Table globals;
   // Interned strings
   Table strings;
   // List of all heap objects

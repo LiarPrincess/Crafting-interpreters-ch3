@@ -9,7 +9,8 @@ typedef enum {
   OP_NIL,
   OP_TRUE,
   OP_FALSE,
-  OP_POP,
+  OP_POP, // vm
+  OP_DEFINE_GLOBAL,
   OP_NOT, // unary
   OP_NEGATE,
   OP_PRINT,
