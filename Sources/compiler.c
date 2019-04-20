@@ -79,6 +79,18 @@ static void consume(TokenType type, const char* message) {
   errorAtCurrent(message);
 }
 
+static bool check(TokenType type) {
+  return parser.current.type == type;
+}
+
+static bool match(TokenType type) {
+  if (!check(type))
+    return false;
+
+  advance();
+  return true;
+}
+
 /* emit */
 
 static void emitByte(uint8_t byte) {
@@ -229,6 +241,31 @@ static void string() {
   emitConstant(OBJ_VAL(value));
 }
 
+/* statements */
+
+static void printStatement() {
+  expression();
+  consume(TOKEN_SEMICOLON, "Expected ';' after value.");
+  emitByte(OP_PRINT);
+}
+
+static void expressionStatement() {
+
+}
+
+static void statement() {
+  if (match(TOKEN_PRINT)) {
+    printStatement();
+  }
+  else {
+    expressionStatement();
+  }
+}
+
+static void declaration() {
+  statement();
+}
+
 /* parse rules */
 
 static ParseRule rules[] = {
@@ -301,8 +338,10 @@ bool compile(const char* source, Chunk* chunk) {
   parser.panicMode = false;
 
   advance();
-  expression();
-  consume(TOKEN_EOF, "Expected end of the expression.");
+  while (!match(TOKEN_EOF)) {
+    declaration();
+  }
+
   endCompiler();
   return !parser.hadError;
 }

@@ -11,6 +11,7 @@ typedef enum {
   OP_FALSE,
   OP_NOT, // unary
   OP_NEGATE,
+  OP_PRINT,
   OP_EQUAL, // binary
   OP_GREATER,
   OP_LESS,
