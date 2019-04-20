@@ -273,6 +273,15 @@ static void string() {
   emitConstant(OBJ_VAL(value));
 }
 
+static void namedVariable(Token name) {
+  int arg = identifierConstant(&name);
+  emitBytes(OP_GET_GLOBAL, (uint8_t) arg);
+}
+
+static void variable() {
+  namedVariable(parser.previous);
+}
+
 /* statements */
 
 static uint8_t parseVariable(const char* errorMessage) {
@@ -355,7 +364,7 @@ static ParseRule rules[] = {
   { NULL,     binary,  PREC_COMPARISON }, // TOKEN_GREATER_EQUAL
   { NULL,     binary,  PREC_COMPARISON }, // TOKEN_LESS
   { NULL,     binary,  PREC_COMPARISON }, // TOKEN_LESS_EQUAL
-  { NULL,     NULL,    PREC_NONE },       // TOKEN_IDENTIFIER
+  { variable, NULL,    PREC_NONE },       // TOKEN_IDENTIFIER
   { string,   NULL,    PREC_NONE },       // TOKEN_STRING
   { number,   NULL,    PREC_NONE },       // TOKEN_NUMBER
   { NULL,     NULL,    PREC_AND },        // TOKEN_AND
