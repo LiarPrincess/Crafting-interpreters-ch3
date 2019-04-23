@@ -3,8 +3,8 @@
 
 #include "common.h"
 #include "compiler.h"
-#include "scanner.h"
 #include "object.h"
+#include "scanner.h"
 
 #ifdef DEBUG_PRINT_CODE
 #include "debug.h"
@@ -27,18 +27,17 @@ static Chunk* currentChunk() {
 /* error */
 
 static void errorAt(Token* token, const char* message) {
-  if (parser.panicMode) return;
-  parser.panicMode = true;
+  if (parser.panicMode)
+    return;
 
+  parser.panicMode = true;
   fprintf(stderr, "[line %d] Error", token->line);
 
   if (token->type == TOKEN_EOF) {
     fprintf(stderr, " at end");
-  }
-  else if (token->type == TOKEN_ERROR) {
+  } else if (token->type == TOKEN_ERROR) {
     // Nothing.
-  }
-  else {
+  } else {
     fprintf(stderr, " at '%.*s'", token->length, token->start);
   }
 
@@ -98,8 +97,7 @@ static void synchronize() {
     if (parser.previous.type == TOKEN_SEMICOLON)
       return;
 
-    switch (parser.current.type)
-    {
+    switch (parser.current.type) {
       case TOKEN_CLASS:
       case TOKEN_FUN:
       case TOKEN_VAR:
@@ -159,15 +157,15 @@ static uint8_t identifierConstant(Token* name) {
 
 typedef enum {
   PREC_NONE,
-  PREC_ASSIGNMENT,  // =
-  PREC_OR,          // or
-  PREC_AND,         // and
-  PREC_EQUALITY,    // == !=
-  PREC_COMPARISON,  // < > <= >=
-  PREC_TERM,        // + -
-  PREC_FACTOR,      // * /
-  PREC_UNARY,       // ! -
-  PREC_CALL,        // . () []
+  PREC_ASSIGNMENT, // =
+  PREC_OR, // or
+  PREC_AND, // and
+  PREC_EQUALITY, // == !=
+  PREC_COMPARISON, // < > <= >=
+  PREC_TERM, // + -
+  PREC_FACTOR, // * /
+  PREC_UNARY, // ! -
+  PREC_CALL, // . () []
   PREC_PRIMARY
 } Precedence;
 
@@ -224,16 +222,36 @@ static void binary(bool canAssign) {
 
   // Emit the operator instruction.
   switch (operatorType) {
-    case TOKEN_BANG_EQUAL:    emitBytes(OP_EQUAL, OP_NOT); break;
-    case TOKEN_EQUAL_EQUAL:   emitByte(OP_EQUAL); break;
-    case TOKEN_GREATER:       emitByte(OP_GREATER); break;
-    case TOKEN_GREATER_EQUAL: emitBytes(OP_LESS, OP_NOT); break;
-    case TOKEN_LESS:          emitByte(OP_LESS); break;
-    case TOKEN_LESS_EQUAL:    emitBytes(OP_GREATER, OP_NOT); break;
-    case TOKEN_PLUS:          emitByte(OP_ADD); break;
-    case TOKEN_MINUS:         emitByte(OP_SUBTRACT); break;
-    case TOKEN_STAR:          emitByte(OP_MULTIPLY); break;
-    case TOKEN_SLASH:         emitByte(OP_DIVIDE); break;
+    case TOKEN_BANG_EQUAL:
+      emitBytes(OP_EQUAL, OP_NOT);
+      break;
+    case TOKEN_EQUAL_EQUAL:
+      emitByte(OP_EQUAL);
+      break;
+    case TOKEN_GREATER:
+      emitByte(OP_GREATER);
+      break;
+    case TOKEN_GREATER_EQUAL:
+      emitBytes(OP_LESS, OP_NOT);
+      break;
+    case TOKEN_LESS:
+      emitByte(OP_LESS);
+      break;
+    case TOKEN_LESS_EQUAL:
+      emitBytes(OP_GREATER, OP_NOT);
+      break;
+    case TOKEN_PLUS:
+      emitByte(OP_ADD);
+      break;
+    case TOKEN_MINUS:
+      emitByte(OP_SUBTRACT);
+      break;
+    case TOKEN_STAR:
+      emitByte(OP_MULTIPLY);
+      break;
+    case TOKEN_SLASH:
+      emitByte(OP_DIVIDE);
+      break;
     default:
       return; // Unreachable.
   }
@@ -247,8 +265,12 @@ static void unary(bool canAssign) {
 
   // Emit the operator instruction.
   switch (operatorType) {
-    case TOKEN_BANG: emitByte(OP_NOT); break;
-    case TOKEN_MINUS: emitByte(OP_NEGATE); break;
+    case TOKEN_BANG:
+      emitByte(OP_NOT);
+      break;
+    case TOKEN_MINUS:
+      emitByte(OP_NEGATE);
+      break;
     default:
       return; // Unreachable.
   }
@@ -261,9 +283,15 @@ static void grouping(bool canAssign) {
 
 static void literal(bool canAssign) {
   switch (parser.previous.type) {
-    case TOKEN_FALSE: emitByte(OP_FALSE); break;
-    case TOKEN_NIL: emitByte(OP_NIL); break;
-    case TOKEN_TRUE: emitByte(OP_TRUE); break;
+    case TOKEN_FALSE:
+      emitByte(OP_FALSE);
+      break;
+    case TOKEN_NIL:
+      emitByte(OP_NIL);
+      break;
+    case TOKEN_TRUE:
+      emitByte(OP_TRUE);
+      break;
     default:
       return; // Unreachable.
   }
@@ -286,8 +314,7 @@ static void namedVariable(Token name, bool canAssign) {
   if (canAssign && match(TOKEN_EQUAL)) {
     expression();
     emitBytes(OP_SET_GLOBAL, (uint8_t)arg);
-  }
-  else {
+  } else {
     emitBytes(OP_GET_GLOBAL, (uint8_t)arg);
   }
 }
@@ -324,8 +351,7 @@ static void varDeclaration() {
 
   if (match(TOKEN_EQUAL)) {
     expression();
-  }
-  else {
+  } else {
     emitByte(OP_NIL);
   }
   consume(TOKEN_SEMICOLON, "Expect ';' after variable declaration.");
@@ -336,8 +362,7 @@ static void varDeclaration() {
 static void statement() {
   if (match(TOKEN_PRINT)) {
     printStatement();
-  }
-  else {
+  } else {
     expressionStatement();
   }
 }
@@ -345,8 +370,7 @@ static void statement() {
 static void declaration() {
   if (match(TOKEN_VAR)) {
     varDeclaration();
-  }
-  else {
+  } else {
     statement();
   }
 
@@ -357,6 +381,7 @@ static void declaration() {
 
 /* parse rules */
 
+// clang-format off
 static ParseRule rules[] = {
   /* prefix   infix    precedence */
   { grouping, NULL,    PREC_CALL },       // TOKEN_LEFT_PAREN
@@ -400,6 +425,7 @@ static ParseRule rules[] = {
   { NULL,     NULL,    PREC_NONE },       // TOKEN_ERROR
   { NULL,     NULL,    PREC_NONE },       // TOKEN_EOF
 };
+// clang-format on
 
 static ParseRule* getRule(TokenType type) {
   return &rules[type];
@@ -410,11 +436,11 @@ static ParseRule* getRule(TokenType type) {
 static void endCompiler() {
   emitReturn();
 
-  #ifdef DEBUG_PRINT_CODE
-    if (!parser.hadError) {
-      disassembleChunk(currentChunk(), "code");
-    }
-  #endif
+#ifdef DEBUG_PRINT_CODE
+  if (!parser.hadError) {
+    disassembleChunk(currentChunk(), "code");
+  }
+#endif
 }
 
 /* compile */

@@ -14,7 +14,7 @@ void initTable(Table* table) {
   table->entries = NULL;
 }
 
-void freeTable(Table* table){
+void freeTable(Table* table) {
   FREE_ARRAY(Entry, table->entries, table->capacity);
   initTable(table);
 }
@@ -31,12 +31,10 @@ static Entry* findEntry(Entry* entries, int capacity, ObjString* key) {
     if (entry->key == NULL) {
       if (IS_NIL(entry->value)) { // empty entry
         return tombstone != NULL ? tombstone : entry;
-      }
-      else if (tombstone == NULL) { // tombstone
+      } else if (tombstone == NULL) { // tombstone
         tombstone = entry;
       }
-    }
-    else if (entry->key == key) {
+    } else if (entry->key == key) {
       return entry;
     }
 
@@ -52,7 +50,7 @@ static void adjustCapacity(Table* table, int capacity) {
   }
 
   table->count = 0;
-  for(int i = 0; i < table->capacity; i++) {
+  for (int i = 0; i < table->capacity; i++) {
     Entry* entry = &table->entries[i];
     if (entry->key == NULL)
       continue;
@@ -113,7 +111,7 @@ bool tableDelete(Table* table, ObjString* key) {
 }
 
 void tableAddAll(Table* from, Table* to) {
-  for(int i = 0; i < from->capacity; i++) {
+  for (int i = 0; i < from->capacity; i++) {
     Entry* entry = &from->entries[i];
     if (entry->key != NULL) {
       tableSet(to, entry->key, entry->value);
@@ -133,11 +131,8 @@ ObjString* tableFindString(Table* table, const char* chars, int length, uint32_t
       // Stop if we find an empty non-tombstone entry.
       if (IS_NIL(entry->value))
         return NULL;
-    }
-    else if (entry->key->length == length
-          && entry->key->hash == hash
-          && memcmp(entry->key->chars, chars, length) == 0) {
-
+    } else if (entry->key->length == length && entry->key->hash == hash &&
+               memcmp(entry->key->chars, chars, length) == 0) {
       // We found it.
       return entry->key;
     }

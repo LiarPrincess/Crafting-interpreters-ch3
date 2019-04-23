@@ -1,10 +1,10 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "memory.h"
-#include "vm.h"
-#include "value.h"
 #include "object.h"
+#include "value.h"
+#include "vm.h"
 
 void* reallocate(void* previous, size_t oldSize, size_t newSize) {
   if (newSize == 0) {
@@ -16,10 +16,9 @@ void* reallocate(void* previous, size_t oldSize, size_t newSize) {
 }
 
 static void freeObject(Obj* object) {
-  switch (object->type)
-  {
+  switch (object->type) {
     case OBJ_STRING: {
-      ObjString* string = (ObjString*) object;
+      ObjString* string = (ObjString*)object;
       printf("freeing %s\n", string->chars);
 
       FREE_ARRAY(char, string->chars, string->length + 1);

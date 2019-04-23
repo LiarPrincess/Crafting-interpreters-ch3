@@ -5,7 +5,7 @@
 #include "value.h"
 
 typedef enum {
-  OP_CONSTANT, //stack
+  OP_CONSTANT, // stack
   OP_NIL,
   OP_TRUE,
   OP_FALSE,

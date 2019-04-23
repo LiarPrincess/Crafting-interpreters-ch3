@@ -1,22 +1,21 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "common.h"
 #include "chunk.h"
-#include "vm.h"
+#include "common.h"
 #include "debug.h"
+#include "vm.h"
 
 static void repl();
 static void runFile(const char* path);
 static char* readFile(const char* path);
 static void waitForInput();
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char* argv[]) {
   initVM();
 
-  switch (argc)
-  {
+  switch (argc) {
     case 1:
       repl();
       break;
@@ -44,7 +43,6 @@ static void repl() {
       break;
     }
 
-
     if (strcmp(line, "exit\n") == 0) {
       printf("Exiting...\n");
       return;
@@ -59,8 +57,10 @@ static void runFile(const char* path) {
   InterpretResult result = interpret(source);
   free(source);
 
-  if (result == INTERPRET_COMPILE_ERROR) exit(65);
-  if (result == INTERPRET_RUNTIME_ERROR) exit(70);
+  if (result == INTERPRET_COMPILE_ERROR)
+    exit(65);
+  if (result == INTERPRET_RUNTIME_ERROR)
+    exit(70);
 }
 
 static char* readFile(const char* path) {
@@ -74,7 +74,7 @@ static char* readFile(const char* path) {
   size_t fileSize = ftell(file);
   rewind(file);
 
-  char* buffer = (char*) malloc(fileSize + 1);
+  char* buffer = (char*)malloc(fileSize + 1);
   if (buffer == NULL) {
     fprintf(stderr, "Not enough memory to read \"%s\".\n", path);
     exit(74);

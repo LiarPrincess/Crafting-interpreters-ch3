@@ -5,7 +5,6 @@
 	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
 	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
 	// Placeholders with the same ids are connected.
-
 	"Include guard": {
 		"prefix": "guard",
 		"body": [
@@ -15,30 +14,6 @@
 			"$0",
 			"",
 			"#endif /* $1_h */"
-		]
-	},
-	"Include": {
-		"prefix": "inc",
-		"body": [
-			"#include \"$1\""
-		]
-	},
-	"Define": {
-		"prefix": "def",
-		"body": [
-			"#define $1 $2"
-		]
-	},
-	"Undefine": {
-		"prefix": "undef",
-		"body": [
-			"#undef $1"
-		]
-	},
-	"Chunk ptr": {
-		"prefix": "ch",
-		"body": [
-			"Chunk* chunk"
 		]
 	},
 	"Clang disable": {
@@ -59,6 +34,13 @@
 		"prefix": "e",
 		"body": [
 			"-exec $0"
+		]
+	},
+	"Clang format off": {
+		"prefix": "format",
+		"body": [
+			"// clang-format off",
+			"// clang-format on"
 		]
 	}
 }

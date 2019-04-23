@@ -1,12 +1,12 @@
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <string.h>
 
-#include "vm.h"
-#include "value.h"
 #include "compiler.h"
-#include "object.h"
 #include "memory.h"
+#include "object.h"
+#include "value.h"
+#include "vm.h"
 
 #ifdef DEBUG_TRACE_EXECUTION
 #include "debug.h"
@@ -81,51 +81,57 @@ static void concatenate() {
 }
 
 static InterpretResult run() {
-  #define READ_BYTE() (*vm.ip++)
-  #define READ_CONSTANT() (vm.chunk->constants.values[READ_BYTE()])
-  #define READ_STRING() AS_STRING(READ_CONSTANT())
-  #define BINARY_OP(valueType, op) \
-    do { \
-      if (!IS_NUMBER(peek(0)) || !IS_NUMBER(peek(1))) { \
-        runtimeError("Operands must be numbers."); \
-        return INTERPRET_RUNTIME_ERROR; \
-      } \
-      \
-      double b = AS_NUMBER(pop()); \
-      double a = AS_NUMBER(pop()); \
-      push(valueType(a op b)); \
-    } while (false)
+#define READ_BYTE() (*vm.ip++)
+#define READ_CONSTANT() (vm.chunk->constants.values[READ_BYTE()])
+#define READ_STRING() AS_STRING(READ_CONSTANT())
+#define BINARY_OP(valueType, op)                      \
+  do {                                                \
+    if (!IS_NUMBER(peek(0)) || !IS_NUMBER(peek(1))) { \
+      runtimeError("Operands must be numbers.");      \
+      return INTERPRET_RUNTIME_ERROR;                 \
+    }                                                 \
+                                                      \
+    double b = AS_NUMBER(pop());                      \
+    double a = AS_NUMBER(pop());                      \
+    push(valueType(a op b));                          \
+  } while (false)
 
-  while (true)
-  {
-    #ifdef DEBUG_TRACE_EXECUTION
-      printf("          ");
-      if (vm.stackTop == vm.stack) {
-        printf("[]");
-      }
-      for (Value* slot = vm.stack; slot < vm.stackTop; slot++) {
-        printf("[");
-        printValue(*slot);
-        printf("]");
-      }
-      printf("\n");
-      disassembleInstruction(vm.chunk, (int)(vm.ip - vm.chunk->code));
-    #endif
+  while (true) {
+#ifdef DEBUG_TRACE_EXECUTION
+    printf("          ");
+    if (vm.stackTop == vm.stack) {
+      printf("[]");
+    }
+    for (Value* slot = vm.stack; slot < vm.stackTop; slot++) {
+      printf("[");
+      printValue(*slot);
+      printf("]");
+    }
+    printf("\n");
+    disassembleInstruction(vm.chunk, (int)(vm.ip - vm.chunk->code));
+#endif
 
     uint8_t instruction;
-    switch (instruction = READ_BYTE())
-    {
+    switch (instruction = READ_BYTE()) {
       case OP_CONSTANT: {
         Value constant = READ_CONSTANT();
         push(constant);
         break;
       }
 
-      case OP_NIL: push(NIL_VAL); break;
-      case OP_TRUE: push(BOOL_VAL(true)); break;
-      case OP_FALSE: push(BOOL_VAL(false)); break;
+      case OP_NIL:
+        push(NIL_VAL);
+        break;
+      case OP_TRUE:
+        push(BOOL_VAL(true));
+        break;
+      case OP_FALSE:
+        push(BOOL_VAL(false));
+        break;
 
-      case OP_POP: pop(); break;
+      case OP_POP:
+        pop();
+        break;
       case OP_DEFINE_GLOBAL: {
         ObjString* name = READ_STRING();
         tableSet(&vm.globals, name, peek(0));
@@ -173,29 +179,37 @@ static InterpretResult run() {
       case OP_EQUAL: {
         Value a = pop();
         Value b = pop();
-        push(BOOL_VAL(valuesEqual(a,b)));
+        push(BOOL_VAL(valuesEqual(a, b)));
         break;
       }
-      case OP_GREATER:  BINARY_OP(BOOL_VAL, >); break;
-      case OP_LESS:     BINARY_OP(BOOL_VAL, <); break;
+      case OP_GREATER:
+        BINARY_OP(BOOL_VAL, >);
+        break;
+      case OP_LESS:
+        BINARY_OP(BOOL_VAL, <);
+        break;
       case OP_ADD: {
         if (IS_STRING(peek(0)) && IS_STRING(peek(1))) {
           concatenate();
-        }
-        else if (IS_NUMBER(peek(0)) && IS_NUMBER(peek(1))) {
+        } else if (IS_NUMBER(peek(0)) && IS_NUMBER(peek(1))) {
           double b = AS_NUMBER(pop());
           double a = AS_NUMBER(pop());
           push(NUMBER_VAL(a + b));
-        }
-        else {
+        } else {
           runtimeError("Operands must be two numbers or two strings.");
           return INTERPRET_RUNTIME_ERROR;
         }
         break;
       }
-      case OP_SUBTRACT: BINARY_OP(NUMBER_VAL, -); break;
-      case OP_MULTIPLY: BINARY_OP(NUMBER_VAL, *); break;
-      case OP_DIVIDE:   BINARY_OP(NUMBER_VAL, /); break;
+      case OP_SUBTRACT:
+        BINARY_OP(NUMBER_VAL, -);
+        break;
+      case OP_MULTIPLY:
+        BINARY_OP(NUMBER_VAL, *);
+        break;
+      case OP_DIVIDE:
+        BINARY_OP(NUMBER_VAL, /);
+        break;
 
       case OP_RETURN:
         return INTERPRET_OK;
@@ -204,10 +218,10 @@ static InterpretResult run() {
     }
   }
 
-  #undef BINARY_OP
-  #undef READ_STRING
-  #undef READ_CONSTANT
-  #undef READ_BYTE
+#undef BINARY_OP
+#undef READ_STRING
+#undef READ_CONSTANT
+#undef READ_BYTE
 }
 
 InterpretResult interpret(const char* source) {

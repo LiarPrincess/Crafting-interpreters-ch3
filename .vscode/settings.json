@@ -25,4 +25,5 @@
     "truthy",
     "workspace's"
   ],
+  "editor.formatOnSave": true
 }
