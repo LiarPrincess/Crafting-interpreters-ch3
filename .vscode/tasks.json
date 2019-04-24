@@ -8,9 +8,9 @@
       "type": "shell",
       "command": "cmake --build ./Build/",
       "group": {
-          "kind": "build",
-          "isDefault": true
-        },
+        "kind": "build",
+        "isDefault": true
+      },
       "problemMatcher": {
         "base": "$gcc",
         "fileLocation": "absolute"
@@ -27,10 +27,12 @@
     {
       "label": "cmake",
       "type": "shell",
-      "command": "cd ./Build && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug",
+      "command": "cd ./build && cmake .. -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Debug",
       "problemMatcher": {
         "owner": "cmake",
-        "pattern": { "regexp": "" }
+        "pattern": {
+          "regexp": ""
+        }
       },
       "presentation": {
         "echo": false,

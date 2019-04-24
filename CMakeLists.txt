@@ -14,10 +14,10 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Executable
-file(GLOB_RECURSE sources "Sources/*.c")
-file(GLOB_RECURSE headers "Sources/*.h")
+file(GLOB_RECURSE sources "src/*.c")
+file(GLOB_RECURSE headers "src/*.h")
 set(executable_name ${PROJECT_NAME}-${CMAKE_BUILD_TYPE})
-add_executable(${executable_name} ${sources} ${headers} "Sources/main.c")
+add_executable(${executable_name} ${sources} ${headers} "src/main.c")
 
 # Flags
 list(APPEND cflags -x c -arch x86_64 --std=c11)
