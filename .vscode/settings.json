@@ -13,7 +13,9 @@
     "cstdarg": "c",
     "object.h": "c",
     "vm.h": "c",
-    "table.h": "c"
+    "table.h": "c",
+    "chunk.h": "c",
+    "internal.h": "c"
   },
   "debug.openDebug": "neverOpen",
   "cSpell.words": [

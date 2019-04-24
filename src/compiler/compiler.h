@@ -1,7 +1,7 @@
 #ifndef compiler_h
 #define compiler_h
 
-#include "chunk.h"
+#include "../chunk.h"
 
 #define UINT8_COUNT (UINT8_MAX + 1)
 
