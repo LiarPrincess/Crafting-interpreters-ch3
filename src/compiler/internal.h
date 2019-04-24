@@ -7,7 +7,7 @@
 
 #include "../common.h"
 #include "../object.h"
-#include "../scanner.h"
+#include "../scanner/scanner.h"
 #include "compiler.h"
 
 #ifdef DEBUG_PRINT_CODE

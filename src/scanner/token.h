@@ -1,5 +1,5 @@
-#ifndef scanner_h
-#define scanner_h
+#ifndef token_h
+#define token_h
 
 typedef enum {
   // Single-character tokens
@@ -56,10 +56,4 @@ typedef struct {
   int line;
 } Token;
 
-// Create new scanner for given source.
-void initScanner(const char* source);
-
-// Get single token from current source.
-Token scanToken();
-
-#endif /* scanner_h */
+#endif /* token_h */
