@@ -132,6 +132,16 @@ static InterpretResult run() {
       case OP_POP:
         pop();
         break;
+      case OP_GET_LOCAL: {
+        uint8_t slot = READ_BYTE();
+        push(vm.stack[slot]);
+        break;
+      }
+      case OP_SET_LOCAL: {
+        uint8_t slot = READ_BYTE();
+        vm.stack[slot] = peek(0);
+        break;
+      }
       case OP_DEFINE_GLOBAL: {
         ObjString* name = READ_STRING();
         tableSet(&vm.globals, name, peek(0));
@@ -160,7 +170,6 @@ static InterpretResult run() {
       case OP_NOT:
         push(BOOL_VAL(isFalsy(pop())));
         break;
-
       case OP_NEGATE:
         if (!IS_NUMBER(peek(0))) {
           runtimeError("Operand must be a number.");
@@ -169,7 +178,6 @@ static InterpretResult run() {
 
         push(NUMBER_VAL(-AS_NUMBER(pop())));
         break;
-
       case OP_PRINT: {
         printValue(pop());
         printf("\n");
