@@ -1,8 +1,8 @@
 #ifndef vm_h
 #define vm_h
 
+#include "../common.h"
 #include "chunk.h"
-#include "common.h"
 #include "table.h"
 #include "value.h"
 

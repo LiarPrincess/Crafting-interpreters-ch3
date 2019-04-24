@@ -2,7 +2,7 @@
 #define debug_h
 
 #include "chunk.h"
-#include "common.h"
+#include "../common.h"
 
 // Print the content of the chunk.
 void disassembleChunk(Chunk* chunk, const char* name);

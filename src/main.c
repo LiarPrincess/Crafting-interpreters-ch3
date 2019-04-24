@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "chunk.h"
 #include "common.h"
-#include "debug.h"
-#include "vm.h"
+#include "vm/chunk.h"
+#include "vm/debug.h"
+#include "vm/vm.h"
 
 static void repl();
 static void runFile(const char* path);

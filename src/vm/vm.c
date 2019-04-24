@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "compiler/compiler.h"
+#include "../compiler/compiler.h"
 #include "memory.h"
 #include "object.h"
 #include "value.h"

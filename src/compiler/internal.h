@@ -6,12 +6,12 @@
 #include <string.h>
 
 #include "../common.h"
-#include "../object.h"
 #include "../scanner/scanner.h"
+#include "../vm/object.h"
 #include "compiler.h"
 
 #ifdef DEBUG_PRINT_CODE
-#include "../debug.h"
+#include "../vm/debug.h"
 #endif
 
 typedef struct {

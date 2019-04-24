@@ -1,7 +1,7 @@
 #ifndef object_h
 #define object_h
 
-#include "common.h"
+#include "../common.h"
 #include "value.h"
 
 typedef enum {

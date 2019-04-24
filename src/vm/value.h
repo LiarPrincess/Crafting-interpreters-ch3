@@ -1,7 +1,7 @@
 #ifndef value_h
 #define value_h
 
-#include "common.h"
+#include "../common.h"
 
 // Value tag
 typedef enum { VAL_BOOL, VAL_NIL, VAL_NUMBER, VAL_OBJ } ValueType;
